@@ -13,33 +13,29 @@ const [marketDataFlag, setMarketDataFlag] = useState(false)
 const [pageNum, setPageNum] = useState(0)
 const [loader, setLoader] = useState(false)
 const [marketPages, setMarketPages] = useState(0)
-const [tokenFlag ,setTokenFlag] = useState(0)
-const [marketFlag, setMarketFlag] = useState(0)
+const [marketCount, setMarketCount] = useState(0)
+const [tokenCount, setTokenCount] = useState(0)
 
 const getAnalytics = () => {
-    console.log('getting')
     setLoader(true)
     axios.get(`https://www.sushi.com/analytics/api/tokens?orderBy=liquidityUSD&orderDirection=desc&pagination={%22pageIndex%22:${pageNum},%22pageSize%22:20}&networks=[1,42161,43114,1285,100,250,56,42220,122,1284,42170,137,288,10,1088,2222]`).then((response)=>{
-        
-    console.log("listing all Data: ", response.data);
+
     setMarketDataFlag(false)
     setLoader(false)
     setData(response.data)
-    // setMarketPages(0)
     
     })
-    console.log(data,'end')
 }
 
 const getTopMarkets = () => {
-    console.log('trying')
     setLoader(true)
     axios.get(`https://www.sushi.com/analytics/api/pools?orderBy=liquidityUSD&orderDirection=desc&pagination={%22pageIndex%22:${marketPages},%22pageSize%22:20}&networks=[1,42161,43114,1285,100,250,56,42220,122,1284,42170,137,288,10,1088,2222]`)
     .then((response)=>{
-        setMarketData(response.data)
+
         setMarketDataFlag(true)
         setLoader(false)
-        // setPageNum(0)
+        setMarketData(response.data)
+        console.log(marketPages,data.length,'112')
     })
 }
 
@@ -51,9 +47,23 @@ useEffect(()=>{
 getTopMarkets()
 },[marketPages])
 
-console.log(data,'-----##')
 
-return (
+const handleMarketButton = () => {
+
+    getTopMarkets()
+    setMarketCount(1)
+    setTokenCount(0)
+}
+
+const handleAnalyticButton = () => {
+    getAnalytics()
+    setTokenCount(1)
+    setMarketCount(0)
+}
+  return (
+
+   
+
     <div className='mainContainer'>
         <Header/>
 
@@ -66,12 +76,12 @@ return (
         </div>
         <div className='buttonContainer'>
         <div className='tokenButtons' 
-        onClick={getTopMarkets}
+        onClick={handleMarketButton}
         >
                 Top Markets
         </div>
         <div className='tokenButtons'
-        onClick={getAnalytics}
+        onClick={handleAnalyticButton}
         >
             Top Token
         </div>
@@ -87,11 +97,12 @@ return (
         pageNum = {pageNum}
         loader = {loader}
         getAnalytics={getAnalytics}
-        marketTokenFlag={marketFlag}
-        tokenFlag={tokenFlag}
         getTopMarkets = {getTopMarkets}
         setMarketPages = {setMarketPages}
         marketPages = {marketPages}
+        marketCount={marketCount}
+        tokenCount = {tokenCount}
+        
         />
         </div>
         <div>

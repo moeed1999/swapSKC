@@ -2,9 +2,29 @@ import React from 'react'
 import './styles.css'
 import { Audio } from 'react-loader-spinner'
 
-const CurrencyTable = ({ data, marketFlag, pageNum, setPageNum, loader, setMarketPages, marketPages, getAnalytics,
-    marketTokenFlag, tokenFlag }) => {
+const CurrencyTable = ({
+    data,
+    marketFlag,
+    pageNum,
+    setPageNum,
+    loader,
+    setMarketPages,
+    marketPages,
+    marketCount,
+    tokenCount,
+}) => {
 
+    const handleBackButton = () => {
+        console.log(marketFlag,'11')
+        marketFlag ? setMarketPages(marketPages - 1) : setPageNum(pageNum - 1);
+        console.log('numbers',marketPages,pageNum)
+    }
+
+    const handleNextButton = () => {
+        console.log(marketFlag,'12')
+        marketFlag ? setMarketPages(marketPages + 1) : setPageNum(pageNum + 1)
+        console.log('numberss',marketPages,pageNum)
+    }
     return (
         <div style={{ marginTop: 10 }}>
             <table
@@ -36,7 +56,7 @@ const CurrencyTable = ({ data, marketFlag, pageNum, setPageNum, loader, setMarke
                         <tr style={{
                             backgroundColor: index % 2 !== 0 ? 'rgb(255 177 195)' : 'white'
                         }}>
-                            <td style={{ width: 100 }}>{data?.chainShortName}</td>
+                            <td style={{ width: 100,padding:4 }}>{data?.chainShortName}</td>
                             <td className='tableColumnWidth'>{data?.name}
                                 <span style={{ opacity: 0.5, fontSize: 15 }}>
                                     {` (${data?.chainShortName})`}
@@ -76,26 +96,82 @@ const CurrencyTable = ({ data, marketFlag, pageNum, setPageNum, loader, setMarke
                     display: 'flex',
                     alignItems: 'center'
                 }}>
-                    <div>
-                        {(pageNum > 0 || marketPages > 0) &&
+                    {/* <div>
+                        {
+                        (
+                            (pageNum > 0 || marketPages > 0) 
+                            // && 
+                        // ( (marketCount == 0 && tokenCount > 0) 
+                        // // || (tokenCount == 0 && marketCount > 1)
+                        // )
+                        ) 
+                        &&
                             <span
-                                onClick={() => { marketFlag ? setMarketPages(marketPages - 1) : setPageNum(pageNum - 1); }}
+                                // onClick={() => { marketFlag ? setMarketPages(marketPages - 1) : setPageNum(pageNum - 1); }}
+                                onClick = {handleBackButton}
                                 style={{ cursor: 'pointer' }}
                                 className='rightLeftIconContainer'
                             >
                                 {'<'}
                             </span>
                         }
-                        {(pageNum + 1 <= data.length / 20 || marketPages + 1 <= data.length / 20) &&
+                        {
+                        (pageNum + 1 <= data.length  || marketPages + 1 <= data.length ) &&
                             <span
-                                onClick={() => marketFlag ? setMarketPages(marketPages + 1) : setPageNum(pageNum + 1)}
+                                // onClick={() => marketFlag ? setMarketPages(marketPages + 1) : setPageNum(pageNum + 1)}
+                                onClick={handleNextButton}
                                 style={{ cursor: 'pointer' }}
                                 className='rightLeftIconContainer'
                             >
                                 {'>'}
                             </span>
                         }
-                    </div>
+                    </div> */}
+                    
+                        { marketFlag ?
+                         <div>
+                            {  marketPages > 0 &&
+                            <span
+                                onClick={() =>  setMarketPages(marketPages - 1)}
+                                style={{ cursor: 'pointer' }}
+                                className='rightLeftIconContainer'
+                            >
+                                {'<'}
+                            </span>
+                            }
+                            { (marketPages+ 1 <= data.length + 1/20 ) &&
+                            <span
+                                onClick={() => setMarketPages(marketPages + 1) }
+                                style={{ cursor: 'pointer' }}
+                                className='rightLeftIconContainer'
+                            >
+                                {'>'}
+                            </span>
+                            }
+                        </div>
+                        :
+                        <div>
+                             {  pageNum > 0 &&
+                            <span
+                                onClick={() =>  setMarketPages(marketPages - 1)}
+                                style={{ cursor: 'pointer' }}
+                                className='rightLeftIconContainer'
+                            >
+                                {'<'}
+                            </span>
+                            }
+                            { (pageNum + 1 <= data.length + 1 /20 ) &&
+                            <span
+                                onClick={() => setMarketPages(marketPages + 1) }
+                                style={{ cursor: 'pointer' }}
+                                className='rightLeftIconContainer'
+                            >
+                                {'>'}
+                            </span>
+                            }
+                            </div>
+                            }
+                    
                 </tr>
             </table>
         </div>

@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const Home = () => {
   const [currency, setCurrency] = useState()
+  const [convertedCurrency, setConvertedCurrency] = useState('')
   const [currencyType, setCurrencyType] = useState('BTC')
   const [convertedCurrencyType, setConvertedCurrencyType] =useState('Ethereum')
   const [options, setOptions] = useState([{name:'1',address:'1'},{name:'1',address:'1'},{name:'1',address:'1'}])
@@ -113,18 +114,17 @@ useEffect(()=>{
         <div className='lowerContainer'>
         <div className='swapBox'>
         <div className='inputFieldContainer'>
-            <textarea
+            <input
             className = 'inputFields'
-            placeholder='0'
             disabled
-            type
+            value={convertedCurrency}
             />
             <SelectVariants label={'choose coin'} options = {options} val={convertedCurrencyType} setVal={setConvertedCurrencyType}/>
         </div>
         </div>
-        <div>
+        {/* <div>
           Estimated GAS:
-        </div>
+        </div> */}
         <div>
           Current Balance: {balance}
         </div>
