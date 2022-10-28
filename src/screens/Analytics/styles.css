@@ -1,0 +1,42 @@
+.mainContainer {
+    background-color: rgba(251,17,142,0.12);
+}
+
+.heading {
+    padding-left: 10px;
+    font-size: 24px;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.subHeading {
+    padding-left: 10px;
+    font-weight: 300;
+    color: #626060;
+    font-size: small;
+    margin-top: 3px;
+}
+
+.buttonContainer {
+    margin: 10px;
+    display: flex;
+}
+
+.tokenButtons{
+    border-radius: 5px;
+    color: white;
+    width: 80px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-left: 10px;
+    background-color: rgb(236, 58, 98);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tableColumnWidth {
+    width: 200px;
+}
